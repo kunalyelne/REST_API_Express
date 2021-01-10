@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet"/>
+    <link href="/styles.css" rel="stylesheet" type="text/css"/>
+    <title>Employees MongoDB</title>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script src="https://unpkg.com/react@15/dist/react.js"></script>
+    <script src="https://unpkg.com/react-dom@15/dist/react-dom.min.js"></script>
+</head>
+<body>
+    <h1 class="title">XYZ.org - Employees REST API</h1>
+    <div id="homepage">
+        <h1>Employees details</h1>
+        <div id="emps"></div>
+    </div>
+    <script type="text/babel">
+        var myHeaders = new Headers();
+        myHeaders.append('pragma', 'no-cache');
+        myHeaders.append('cache-control', 'no-cache');
+        let Employees = React.createClass({
+            getInitialState: function () {
+                return ({
+                    emps: []
+                });
+            },
+            render: function () {
+                let emps = this.state.emps;
+                emps = emps.map(function (emp, index) {
+                    return (
+                        <li key={index}>
+                            <span className="true"></span>
+                            <span className="name">{emp.name}</span>
+                            <span className="rank">{emp.id}</span>
+                        </li>
+                    );
+                });
+                return (
+                    <div id="emp-container">
+                        <form id="search" onSubmit={this.handleSubmit}>
+                            <input type="submit" value="Fetch Details" />
+                        </form>
+                        <ul>{emps}</ul>
+                    </div>
+                );
+            },
+            handleSubmit: function (e) {
+                e.preventDefault();
+                fetch('http://localhost:4000/api/employees').then((res)=>{
+                    return res.json();
+                }).then((result)=>{
+                    this.setState({emps:result});
+                })
+            }
+        });
+        ReactDOM.render(<Employees />, document.getElementById('emps'));
+    </script>
+</body>
+</html>
