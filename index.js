@@ -5,9 +5,9 @@ const mongoose = require('mongoose');
 
 //setting up the app
 const app = express();
-
+var kyo_admin='<Username?>:<Password?>';
 //connecting to mongoDB 
-mongoose.connect('mongodb+srv://kyo_admin:Restapi@cluster-kyo.vqnss.mongodb.net/REST_API?retryWrites=true&w=majority')
+mongoose.connect('mongodb+srv://'+{kyo_admin}+'@cluster-kyo.vqnss.mongodb.net/REST_API?retryWrites=true&w=majority')
 mongoose.Promise = global.Promise;
 
 //front-end static requests
